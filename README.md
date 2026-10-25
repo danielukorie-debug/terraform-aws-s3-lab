@@ -106,3 +106,34 @@ you need to retain.
 - Add lifecycle rules to manage older object versions.
 - Add logging and monitoring where appropriate.
 - Add automated Terraform formatting and validation to CI/CD.
+
+
+## Architecture Diagram
+
+This diagram represents the S3 resources defined in the Terraform configuration. It describes the intended configuration, not proof that resources are deployed in AWS.
+
+```mermaid
+flowchart TD
+    Admin[Cloud administrator]
+    TF[Terraform configuration]
+    AWS[AWS provider - us-east-1]
+    Bucket[S3 bucket]
+    Public[Block public access]
+    Encrypt[Server-side encryption - AES256]
+    Version[Bucket versioning enabled]
+    Outputs[Terraform outputs - bucket name and ARN]
+
+    Admin --> TF
+    TF --> AWS
+    AWS --> Bucket
+    Bucket --> Public
+    Bucket --> Encrypt
+    Bucket --> Version
+    Bucket --> Outputs
+```
+
+## Validation Screenshot
+
+![Terraform S3 validation screenshot](docs/images/s3-terraform-validation.png)
+
+This screenshot documents the Terraform validation result. Validation does not prove that the S3 bucket was deployed successfully.
