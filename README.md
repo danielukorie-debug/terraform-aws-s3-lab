@@ -137,3 +137,30 @@ flowchart TD
 ![Terraform S3 validation screenshot](docs/images/s3-terraform-validation.png)
 
 This screenshot documents the Terraform validation result. Validation does not prove that the S3 bucket was deployed successfully.
+
+## Verified Infrastructure Drift
+
+A read-only AWS and Terraform inspection identified
+a mismatch between Terraform state and live infrastructure.
+
+### Verified Findings
+
+- Terraform configuration passed validation.
+- Terraform state recorded four S3 resources.
+- AWS returned 404/NoSuchBucket for the recorded bucket.
+- A refresh-only Terraform plan detected all four resources as deleted.
+- The separate bucket `oct-19-bucket` exists in the account.
+- No AWS resources were recreated or modified.
+- Terraform state has not been reconciled.
+
+### Evidence
+
+![Terraform drift evidence](docs/images/terraform-drift-evidence.png)
+
+[Read the full Terraform drift report](docs/terraform-drift-report.md)
+
+### Deployment Status
+
+The Terraform-managed S3 bucket is currently missing from AWS.
+The configuration and historical state records are retained for learning.
+A future deployment requires reviewing the Terraform plan and approval.
